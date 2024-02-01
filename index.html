@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload Zip File</title>
-</head>
-<body>
-    <h1>Upload a Zip File</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <input type="file" name="zip_file" accept=".zip" required>
-        <button type="submit">Upload and Extract</button>
-    </form>
-</body>
+<html>
+  <head>
+    <title>Upload and Extract Zip File</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.5.0/jszip.min.js"></script>
+    <script src="upload.js"></script>
+  </head>
+  <body>
+    <h1>Upload a .zip file</h1>
+    <input type="file" id="zip_file" accept=".zip" />
+    <button onclick="uploadAndExtract()">Upload and Extract</button>
+    <a id="download_link" style="display: none;">Download Extracted Files</a>
+  </body>
 </html>
