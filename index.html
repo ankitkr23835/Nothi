@@ -1,49 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>File Upload</title>
-    <style>
-        .upload-status {
-            margin-top: 20px;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Zip File</title>
 </head>
 <body>
-    <h1>Upload a File</h1>
-    <form id="upload-form" enctype="multipart/form-data">
-        <input type="file" id="file-input" name="file" required>
-        <button type="submit">Upload</button>
+    <h1>Upload a Zip File</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="zip_file" accept=".zip" required>
+        <button type="submit">Upload and Extract</button>
     </form>
-    <div class="upload-status" id="upload-status"></div>
-    <script>
-        const form = document.getElementById('upload-form');
-        const fileInput = document.getElementById('file-input');
-        const uploadStatus = document.getElementById('upload-status');
-
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
-            const file = fileInput.files[0];
-            if (!file) {
-                uploadStatus.textContent = 'No file selected.';
-                return;
-            }
-            uploadStatus.textContent = 'Uploading...';
-            const formData = new FormData();
-            formData.append('file', file);
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData
-                });
-                if (response.ok) {
-                    uploadStatus.textContent = 'File uploaded successfully.';
-                } else {
-                    uploadStatus.textContent = 'Error uploading file.';
-                }
-            } catch (error) {
-                uploadStatus.textContent = 'Error uploading file.';
-            }
-        });
-    </script>
 </body>
 </html>
