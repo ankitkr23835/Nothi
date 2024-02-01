@@ -1,13 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>File Download</title>
+    <title>File Upload</title>
+    <style>
+        .upload-status {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-	<h1>Upload and Download File</h1>
-	<input type="file" id="fileInput" accept=".txt"><br><br>
-	<button onclick="uploadFile()">Upload File</button>
-	<p id="status"></p>
-	<a id="downloadLink" download></a>
+    <h1>Upload a File</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+        <input type="file" id="file-input" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div class="upload-status" id="upload-status"></div>
+    <script>
+        const form = document.getElementById('upload-form');
+        const fileInput = document.getElementById('file-input');
+        const uploadStatus = document.getElementById('upload-status');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const file = fileInput.files[0];
+            if (!file) {
+                uploadStatus.textContent = 'No file selected.';
+                return;
+            }
+            uploadStatus.textContent = 'Uploading...';
+            const formData = new FormData();
+            formData.append('file', file);
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                if (response.ok) {
+                    uploadStatus.textContent = 'File uploaded successfully.';
+                } else {
+                    uploadStatus.textContent = 'Error uploading file.';
+                }
+            } catch (error) {
+                uploadStatus.textContent = 'Error uploading file.';
+            }
+        });
+    </script>
 </body>
 </html>
